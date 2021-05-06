@@ -3,9 +3,15 @@ import RepositoryItem from './RepositoryItem';
 
 import '../styles/repositories.scss';
 
-//https://api.github.com/users/ViniciusTei/repos
+interface IRepository {
+  id: string;
+  name: string;
+  description: string;
+  html_url: string;
+}
+
 export function RepositoryList() {
-  const [repositories, setRepositories] = useState([]);
+  const [repositories, setRepositories] = useState<IRepository[]>([]);
 
   useEffect(() => {
     fetch('https://api.github.com/users/ViniciusTei/repos')
@@ -22,9 +28,7 @@ export function RepositoryList() {
           return (
           <RepositoryItem 
             key={repo.id}
-            repository={repo.name} 
-            description={repo.description}
-            link={repo.html_url}
+            repository={repo} 
           />
           )})}
       </ul>
