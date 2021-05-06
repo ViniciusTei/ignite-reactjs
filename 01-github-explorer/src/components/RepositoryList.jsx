@@ -24,7 +24,7 @@ export function RepositoryList() {
             key={repo.id}
             repository={repo.name} 
             description={repo.description}
-            link={repo.url}
+            link={repo.html_url}
           />
           )})}
       </ul>
