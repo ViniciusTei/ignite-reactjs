@@ -6,7 +6,8 @@ import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
 import { makeServer } from './services/server';
 
-makeServer()
+makeServer();
+Modal.setAppElement('#root');
 
 export function App() {
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
@@ -23,9 +24,8 @@ export function App() {
       <Header handleOpenNewTransactionNewModal={handleOpenNewTransactionNewModal}/>
       <Dashboard/>
       <Modal
-          isOpen={isNewTransactionModalOpen}
-          onRequestClose={handleCloseNewTransactionNewModal}
-      >
+        isOpen={isNewTransactionModalOpen}
+        onRequestClose={handleCloseNewTransactionNewModal}>
           <h2>Nova transação</h2>
       </Modal>
       <GlobalStyle/>
