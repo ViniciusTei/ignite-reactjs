@@ -1,6 +1,5 @@
-
 import styled from 'styled-components';
-
+import {LightenDarkenColor} from '../../utils/Color';
 export const Container = styled.form`
     h2 {
         color: var(--text-title);
@@ -52,12 +51,27 @@ export const TransactionTypeContainer = styled.div`
     grid-template-columns: 1fr 1fr;
     gap: .5rem;
 
-    button {
+
+`
+interface TransactionTypeButtonProps {
+    isActive: boolean;
+    activeColor: 'green' | 'red';
+}
+
+const colors = {
+    green:'#33CC95',
+    red: '#e52e4d'
+}
+
+
+export const TransactionTypeButton = styled.button<TransactionTypeButtonProps>`
         height: 4rem;
         border: 1px solid #d7d7d7;
         border-radius: .25rem;
-        background: transparent;
-
+        background: ${props => props.isActive 
+        ? LightenDarkenColor(colors[props.activeColor], 99) 
+        : 'transparent'};
+        
         display: flex;
         align-items: center;
         justify-content: center;
@@ -77,5 +91,4 @@ export const TransactionTypeContainer = styled.div`
             font-size: 1rem;
             color: var(--text-title);
         }
-    }
 `

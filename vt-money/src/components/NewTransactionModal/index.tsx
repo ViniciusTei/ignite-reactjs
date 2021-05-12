@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import Modal from 'react-modal';
-import { Container, TransactionTypeContainer } from './styles';
+import { Container, TransactionTypeContainer, TransactionTypeButton } from './styles';
 
 import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
@@ -12,6 +13,7 @@ interface NewTransactionModalProps {
 
 Modal.setAppElement('#root');
 export const NewTransactionModal = ({isOpen, onRequestClose}: NewTransactionModalProps) => {
+    const [type, setType] = useState('');
 
     return (
     <Modal
@@ -20,7 +22,10 @@ export const NewTransactionModal = ({isOpen, onRequestClose}: NewTransactionModa
         overlayClassName="react-modal-overlay"
         className="react-modal-content"
         >
-        <button type="button" className="react-modal-close" onClick={onRequestClose}>
+        <button 
+            type="button" 
+            className="react-modal-close" 
+            onClick={onRequestClose}>
             <img src={closeImg} alt="Fechar modal" />
         </button>
         <Container>
@@ -29,14 +34,22 @@ export const NewTransactionModal = ({isOpen, onRequestClose}: NewTransactionModa
             <input type="number" placeholder="Valor" />
 
             <TransactionTypeContainer>
-                <button type="button">
+                <TransactionTypeButton 
+                    type="button" 
+                    onClick={() => setType('deposit')}
+                    isActive={type === 'deposit'}
+                    activeColor="green">
                     <img src={incomeImg} alt="Entrada" />
                     <span>Entradas</span>
-                </button>
-                <button type="button">
+                </TransactionTypeButton>
+                <TransactionTypeButton 
+                    type="button" 
+                    onClick={() => setType('withdraw')}
+                    isActive={type === 'withdraw'}
+                    activeColor="red">
                     <img src={outcomeImg} alt="Saida" />
                     <span>Saidas</span>
-                </button>
+                </TransactionTypeButton>
             </TransactionTypeContainer>
             <input type="text" placeholder="Categoria" />
             <button type="submit">Cadastrar</button>
