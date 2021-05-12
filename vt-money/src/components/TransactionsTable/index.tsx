@@ -36,7 +36,7 @@ export const TransactionsTable: React.FC = () => {
                 {transactions.map((value) => (
                     <tr key={value.id}>
                         <td>{value.title}</td>
-                        <td className="withdraw">
+                        <td className={value.type}>
                             {new Intl.NumberFormat('pt-BR', {
                                 style: 'currency',
                                 currency: 'BRL'
