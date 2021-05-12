@@ -36,8 +36,9 @@ export function makeServer() {
 
         this.post('/transactions', (schema, request) => {
           const data = JSON.parse(request.requestBody)
-
-          return schema.create('transaction', data)
+          const newData = {...data, created_at: new Date().toString(), id: schema.all('transaction').length + 1}
+          
+          return schema.create('transaction', newData)
         })
       }
   })

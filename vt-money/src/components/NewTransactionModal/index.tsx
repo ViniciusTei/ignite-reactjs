@@ -6,6 +6,7 @@ import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 import { api } from '../../services/api';
+import { useTransaction } from '../../contexts/TransactionContext';
 
 interface NewTransactionModalProps {
     isOpen: boolean;
@@ -18,21 +19,25 @@ export const NewTransactionModal = ({isOpen, onRequestClose}: NewTransactionModa
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('');
     const [value, setValue] = useState(0);
-    function handleCreateNewTransaction(event: FormEvent) {
+    const {createNewTransaction} = useTransaction();
+
+    async function handleCreateNewTransaction(event: FormEvent) {
         event.preventDefault();
 
         const data = {
             title,
-            value,
+            amount: value,
             category,
-            type
+            type,
         }
 
-        try {
-            api.post('/transactions', data)
-        } catch (error) {
-            console.log(error)
-        }
+        await createNewTransaction(data)
+        
+        onRequestClose()
+        setTitle('')
+        setValue(0)
+        setCategory('')
+        setType('')
     }
 
     return (
