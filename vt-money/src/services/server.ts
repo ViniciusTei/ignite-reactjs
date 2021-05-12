@@ -5,6 +5,29 @@ export function makeServer() {
     models: {
       transaction: Model
     },
+
+    seeds(server) {
+      server.db.loadData({
+        transactions: [
+          {
+            id: 1,
+            title: 'Dev front-end',
+            type: 'deposit',
+            category: 'dev',
+            amount: 2500,
+            created_at: new Date(),
+          },
+          {
+            id: 2,
+            title: 'Aluguel',
+            type: 'withdraw',
+            category: 'casa',
+            amount: 300,
+            created_at: new Date(),
+          }
+        ]
+      })
+    },
     routes() {
         this.namespace = 'api';
         this.get('/transactions', () => {
