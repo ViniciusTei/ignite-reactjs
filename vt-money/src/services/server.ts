@@ -1,20 +1,20 @@
-import { createServer } from "miragejs"
+import { createServer, Model } from "miragejs"
 
 export function makeServer() {
   return createServer({
+    models: {
+      transaction: Model
+    },
     routes() {
         this.namespace = 'api';
         this.get('/transactions', () => {
-          return [
-            {
-              id: 1,
-              title: 'Gas de cozinha',
-              amount: 90,
-              type: 'withdraw',
-              category: 'Casa',
-              created_at: new Date(),
-            }
-          ]
+          return this.schema.all('transaction')
+        })
+
+        this.post('/transactions', (schema, request) => {
+          const data = JSON.parse(request.requestBody)
+
+          return schema.create('transaction', data)
         })
       }
   })
