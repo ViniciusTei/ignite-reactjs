@@ -6,6 +6,7 @@ import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
 import { makeServer } from './services/server';
 import { NewTransactionModal } from './components/NewTransactionModal';
+import { TransactionsProvider } from './contexts/TransactionContext';
 
 makeServer();
 
@@ -22,10 +23,13 @@ export function App() {
     }
   return (
     <>
+    <TransactionsProvider>
       <Header handleOpenNewTransactionNewModal={handleOpenNewTransactionNewModal}/>
       <Dashboard/>
       <NewTransactionModal isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionNewModal}/>
       <GlobalStyle/>
+    </TransactionsProvider>
+      
     </>
   );
 }
