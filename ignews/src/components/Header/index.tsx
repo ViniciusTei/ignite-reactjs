@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { SigninButton } from '../SigninButton';
 
 import styles from './styles.module.scss';
+
 
 export const Header: React.FC = () => {
   return (
