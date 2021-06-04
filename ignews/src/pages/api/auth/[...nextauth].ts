@@ -12,6 +12,7 @@ export default NextAuth({
       clientSecret: process.env.GITHUB_SECRET,
       scope: 'read:user'
     }),
+    
     // ...add more providers here
   ],
   callbacks: {
