@@ -1,10 +1,18 @@
 import { GetStaticProps } from 'next';
-import Prismic from '@prismicio/client';
+import Prismic from "@prismicio/client";
+import { RichText } from 'prismic-dom'
 import Head from 'next/head';
 import { getPrismicClient } from '../../services/prismic';
 import styles from './styles.module.scss';
-
-export default function Posts() {
+interface PostsProps {
+    posts: Array<{
+        slug: string
+        title: string
+        excerpt: string
+        updatedAt: string
+    }>
+}
+export default function Posts({ posts }: PostsProps) {
   return (
       <>
         <Head>
@@ -12,21 +20,13 @@ export default function Posts() {
         </Head>
         <main className={styles.Container}>
             <div className={styles.PostList}>
-                <a href="">
-                    <time>12 de marco de 2021</time>
-                    <strong>Creating a monorepo with leran and yarn</strong>
-                    <p>Primeiro eu queria cumprimentar os internautas. -Oi Internautas! Depois dizer que o meio ambiente é sem dúvida nenhuma uma ameaça ao desenvolvimento sustentável. E isso significa que é uma ameaça pro futuro do nosso planeta e dos nossos países. O desemprego beira 20%, ou seja, 1 em cada 4 portugueses</p>
-                </a>
-                <a href="">
-                    <time>12 de marco de 2021</time>
-                    <strong>Creating a monorepo with leran and yarn</strong>
-                    <p>Primeiro eu queria cumprimentar os internautas. -Oi Internautas! Depois dizer que o meio ambiente é sem dúvida nenhuma uma ameaça ao desenvolvimento sustentável. E isso significa que é uma ameaça pro futuro do nosso planeta e dos nossos países. O desemprego beira 20%, ou seja, 1 em cada 4 portugueses</p>
-                </a>
-                <a href="">
-                    <time>12 de marco de 2021</time>
-                    <strong>Creating a monorepo with leran and yarn</strong>
-                    <p>Primeiro eu queria cumprimentar os internautas. -Oi Internautas! Depois dizer que o meio ambiente é sem dúvida nenhuma uma ameaça ao desenvolvimento sustentável. E isso significa que é uma ameaça pro futuro do nosso planeta e dos nossos países. O desemprego beira 20%, ou seja, 1 em cada 4 portugueses</p>
-                </a>
+                {posts.map(post => (
+                <a href="" key={post.slug}>
+                    <time>{post.updatedAt}</time>
+                    <strong>{post.title}</strong>
+                    <p>{post.excerpt}</p>
+                 </a>
+                ))}
             </div>
         </main>
       </>
@@ -36,17 +36,27 @@ export default function Posts() {
 export const getStaticProps: GetStaticProps = async () => {
     const prismic = getPrismicClient()
 
-    const response = await prismic.query([
-        Prismic.predicates.at('document.type', 'post')
-    ], {
+    const response = await prismic.query([Prismic.Predicates.at('document.type', 'post')], {
         fetch: ['post.title', 'post.content'],
-        pageSize: 20
+        pageSize: 100
     })
 
-    console.log(JSON.stringify(response, null, 2))
+    const posts = response.results.map(post => {
+        return {
+            slug: post.uid,
+            title: RichText.asText(post.data.title),
+            excerpt: post.data.content.find(c => c.type === 'paragraph')?.text ?? '',
+            updatedAt: new Date(post.last_publication_date).toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            })
+        }
+    })
+
     return {
         props: {
-            posts: response.results
+            posts: posts
         }
     }
 }
