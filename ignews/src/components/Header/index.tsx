@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 import { SigninButton } from '../SigninButton';
 
@@ -11,8 +12,12 @@ export const Header: React.FC = () => {
           <div className={styles.headerrContent}>
               <img src="/images/logo.svg" alt="Logo ig.news" />
               <nav>
-                  <a className={styles.active} href="">Home</a>
-                  <a href="">Posts</a>
+                  <Link href="/">
+                    <a className={styles.active} >Home</a>
+                  </Link>
+                  <Link href="/posts" prefetch>
+                    <a>Posts</a>
+                  </Link>
               </nav>
               <SigninButton/>
           </div>
