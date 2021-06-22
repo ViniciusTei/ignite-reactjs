@@ -1,5 +1,7 @@
 import { Flex, Input, Text, Icon, HStack, Box, Avatar } from '@chakra-ui/react';
 import { RiNotificationLine, RiSearchLine, RiUserAddLine } from 'react-icons/ri';
+import { NotificationsNav } from './Header/NotificationsNav';
+import { Profile } from './Header/Profile';
 
 export function Header() {
     return(
@@ -50,27 +52,8 @@ export function Header() {
                 align="center"
                 ml="auto"
             >
-                <HStack 
-                    spacing="8" 
-                    mx="8"
-                    pr="8"
-                    py="1"
-                    color="gray.300"
-                    borderRightWidth={1}
-                    borderColor="gray.700"
-                    >
-                    <Icon as={RiNotificationLine} fontSize="20"/>
-                    <Icon as={RiUserAddLine} fontSize="20"/>
-                </HStack>
-                <Flex
-                    align="center"
-                >
-                    <Box mr="4" align="right">
-                        <Text>Vinicius Teixeira</Text>
-                        <Text color="gray.300" fontSize="small">viniciustprates@gmail.com</Text>
-                    </Box>
-                    <Avatar size="md" name="Vinicius Teixeira" src="https://github.com/viniciustei.png"></Avatar>
-                </Flex>
+                <NotificationsNav/>
+                <Profile/>
             </Flex>
         </Flex>
     )
