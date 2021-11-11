@@ -13,6 +13,7 @@
     "@emotion/styled": "^11",
     "@hookform/resolvers": "^2.6.0",
     "apexcharts": "^3.27.1",
+    "axios": "^0.24.0",
     "framer-motion": "^4",
     "next": "10.2.3",
     "react": "17.0.2",
